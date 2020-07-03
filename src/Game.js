@@ -10,9 +10,7 @@ export default class Game {
         this._tubes      = [];
         this._raisedTube = null;
         this._finished   = false;
-    }
 
-    start() {
         let n, x, color;
         let tube, ball;
         const nbBallsPerColor = 4;

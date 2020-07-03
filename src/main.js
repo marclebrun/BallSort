@@ -17,7 +17,6 @@ window.setTimeout(function() {
     console.log('canvas.height: ' + canvas.height);
     
     game = new Game(canvas);
-    game.start();
     
     requestAnimationFrame(gameLoop);
     
