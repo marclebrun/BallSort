@@ -1,0 +1,19 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+img {
+    display: none;
+}
+
+.gamescreen {
+    background: rgb(143, 159, 170);
+    /* width: 100vw; */
+    /* height: 100vh; */
+    /* max-width: 400px; */
+    /* max-height: 600px; */
+    margin: auto;
+}
