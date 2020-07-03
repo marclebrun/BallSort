@@ -14,7 +14,7 @@ export default class Game {
         let n, x, color;
         let tube, ball;
         const nbBallsPerColor = 4;
-        const nbTubes = nbBallsPerColor//+1;
+        const nbTubes = nbBallsPerColor + 1;
         const tubeWidth = 60;
         const ballSize = 44;
         const space = (this._width - (nbTubes * tubeWidth)) / (nbTubes + 1);
