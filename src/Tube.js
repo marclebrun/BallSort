@@ -85,6 +85,14 @@ export default class Tube {
         }
     }
 
+    getTopBallColor() {
+        if(this._balls.length > 0) {
+            let ball = this._balls[this._balls.length-1];
+            return ball.getColor();
+        }
+        return '';
+    }
+
     update() {
         this._balls.forEach(
             ball => ball.update()

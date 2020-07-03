@@ -91,8 +91,15 @@ export default class Game {
                     } else {
                         if(this._raisedTube) {
                             console.log('other tube is raised => move the ball to this tube');
+                            console.log('  => top ball color is ' + tube.getTopBallColor());
                             let ball = this._raisedTube.removeBall();
-                            tube.addBall(ball);
+                            console.log('  => ball color is ' + ball.getColor());
+                            if( (ball.getColor() == tube.getTopBallColor()) || (tube.getTopBallColor() == '') ) {
+                                tube.addBall(ball);
+                            } else {
+                                this._raisedTube.addBall(ball);
+                                console.log('  => FORBIDDEN MOVE !!!');
+                            }
                             this._raisedTube = null;
                         } else {
                             if(tube.isEmpty()) {
