@@ -4,10 +4,12 @@ import Ball from "./Ball.js";
 export default class Game {
 
     constructor(canvas) {
-        this._canvas = canvas;
-        this._width  = canvas.width;
-        this._height = canvas.height;
-        this._tubes  = [];
+        this._canvas     = canvas;
+        this._width      = canvas.width;
+        this._height     = canvas.height;
+        this._tubes      = [];
+        this._raisedTube = null;
+        this._finished   = false;
     }
 
     start() {
@@ -45,8 +47,6 @@ export default class Game {
             }
         }
 
-        this.raisedTube = null;
-
         this._canvas.addEventListener("mousedown", event => {
             // console.log("mousedown");
             this.processClick(event.offsetX, event.offsetY);
@@ -68,6 +68,14 @@ export default class Game {
         this._tubes.forEach(
             tube => tube.draw(context)
         )
+
+        if(this._finished) {
+            context.fillStyle    = "#EFC";
+            context.font         = "70px Verdana";
+            context.textBaseline = "alphabetic";
+            context.textAlign    = "center"
+            context.fillText("Gagné !", this._width / 2, 100);
+        }
     }
 
     getRandomTube() {
@@ -78,23 +86,23 @@ export default class Game {
         this._tubes.forEach(
             tube => {
                 if(tube.isInside(x, y)) {
-                    if(tube == this.raisedTube) {
+                    if(tube == this._raisedTube) {
                         console.log('this tube is raised => lower the ball');
                         tube.lowerBall();
-                        this.raisedTube = null;
+                        this._raisedTube = null;
                     } else {
-                        if(this.raisedTube) {
+                        if(this._raisedTube) {
                             console.log('other tube is raised => move the ball to this tube');
-                            let ball = this.raisedTube.removeBall();
+                            let ball = this._raisedTube.removeBall();
                             tube.addBall(ball);
-                            this.raisedTube = null;
+                            this._raisedTube = null;
                         } else {
                             if(tube.isEmpty()) {
                                 console.log('this tube is empty => cannot raise any ball')
                             } else {
                                 console.log('no tube is raised => this one becomes raised');
                                 tube.raiseBall();
-                                this.raisedTube = tube;
+                                this._raisedTube = tube;
                             }
                         }
                     }
@@ -110,6 +118,21 @@ export default class Game {
                 }
             }
         )
+        
+        // Check if game finished
+        this._finished = true;
+        this._tubes.forEach(
+            tube => {
+                if(!tube.isSingleColor()) {
+                    this._finished = false;
+                } else {
+                    if( (!tube.isFull()) && (!tube.isEmpty()) ) {
+                        this._finished = false;
+                    }
+                }
+            }
+        )
+
     }
 
 }
